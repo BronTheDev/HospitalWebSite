@@ -1,0 +1,66 @@
+/*CSS style sheet*/
+
+#main-wrapper{
+    width:500px;
+    margin: 0 auto;
+    background:#f1c40f;
+    padding:5px;
+    border-radius:10px;
+    border: 2px solid rgb(48, 63, 159);
+}
+.avatar{
+	width: 100px;
+	text-align: center;
+
+}
+.myform{
+	width:450px;
+	margin:0 auto;
+}
+.inputvalues{
+	width: 450px;
+	margin: 0 auto;
+	padding: 5px;
+}
+#login_btn{
+	margin-top: 10px;
+	background-color:rgb(48, 63, 159) ;
+	padding:5px;
+	color:  #f1c40f;
+	width: 103%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+#register_btn{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	background-color:rgb(48, 63, 159) ;
+	padding:5px;
+	color:  #f1c40f;
+	width: 103%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+#signup_btn{
+	margin-top: 10px;
+	background-color:rgb(48, 63, 159) ;
+	padding:5px;
+	color:  #f1c40f;
+	width: 103%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+#back_btn{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	background-color:rgb(48, 63, 159) ;
+	padding:5px;
+	color:  #f1c40f;
+	width: 103%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
