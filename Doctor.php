@@ -1,7 +1,8 @@
 <?php
+ob_start();
 session_start();
-require 'security.php';
 require 'dbconfig/config.php';
+//require 'security.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,13 +22,13 @@ table, th, td {
 		<center>
 			<h2>NCAT HEALTH CENTER</h2>
 			<img src="imgs/logo.png" class="avatar"/>
-			<h4> Wel <?php echo $_SESSION['username'];        ?> </h4>
+			<h4> Welcome <?php echo $_SESSION['username'];        ?> </h4>
 		
 
-		<form class="myform" action="Patient.php" method="post">
+		<form class="myform" action="Doctor.php" method="post">
 			<table>
 				<tr>
-					<th>Name</th>
+					<th>Hello</th>
 					<th>Address</th>
 					<th>Phone</th>
 					<th>Bill</th>
@@ -42,17 +43,14 @@ table, th, td {
 
 				
 			</table>	
-			<input name ="logout" type="submit" id="back_btn" value="Log Out"/>
+			<input name ="logout" type="button" id="back_btn" value="Log Out"/>
 	</form>
-	<?php
+		<?php
 	if (isset($_POST["logout"])) {
-	session_start();
-    session_destroy();
-    unset($_SESSION["username"]);
-
-    header('Location: index.php');
-    exit;
-
+	//header('Location: index.php');
+   // exit;
+    //session_destroy();
+    //unset($_SESSION["username"]);
     echo '<script type="text/javascript"> alert("Error! User Name is Taken") </script>';
 	
 	}
