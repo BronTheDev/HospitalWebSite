@@ -116,25 +116,46 @@ if (isset($_POST["logout"])) {
 						<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
 				</center>
-				<table id="myTable">
-					<tr class="header">
-						<th style="width:5%;">ID</th>
-						<th style="width:20%;">Name</th>
-						<th style="width:20%;">Email</th>
-						<th style="width:20%;">Phone</th>
-						<th style="width:20%;">Billing</th>
-						<th style="width:20%;">Last Updated</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Geogio Armani</td>
-						<td>Alfreds@gmail.com</td>
-						<td>(919)-345-6849</td>
-						<td>$12,323.23</td>
-						<td>12:45 AM</td>
-					</tr>
-				</table>
-
+                <?php
+                $dbName="Hospital";
+                $serverName = "DESKTOP-GMPS9UK";
+                $dbName="Hospital";
+                $username = $_SESSION['userName'];
+                $password = $_SESSION['passWord'];
+                $dbh = new PDO( "sqlsrv:server=".$serverName."; Database=".$dbName, $username, $password);
+                $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+                $searchPatients = "select * from patients";
+                ?>
+                <table id="myTable">
+                    <tr class="header">
+                        <th style="width:5%;">ID</th>
+                        <th style="width:20%;">Name</th>
+                        <th style="width:20%;">Email</th>
+                        <th style="width:20%;">Phone</th>
+                        <th style="width:20%;">Billing</th>
+                        <th style="width:20%;">Last Updated</th>
+                    </tr>
+                    <tr>
+                        <td>17883</td>
+                        <td>Geogio Armani</td>
+                        <td>Alfreds@gmail.com</td>
+                        <td>(919)-345-6849</td>
+                        <td>$12,323.23</td>
+                        <td>12:45 AM</td>
+                    </tr>
+                    <?php
+                    foreach ($dbh->query($searchPatients) as $rows) {
+                        ?>
+                        <tr>
+                            <td><?php echo ($rows['name']) ?></td>
+                            <td><?php echo $rows['address'] ?></td>
+                            <td><?php echo $rows['ID'] ?></td>
+                            <td><?php echo $rows['phone_number'] ?></td>
+                            <td><?php echo $rows['account_balance'] ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
 				<script>
 					function myFunction() {
 						var input, filter, table, tr, td, i, txtValue;
@@ -155,10 +176,10 @@ if (isset($_POST["logout"])) {
 						}
 					}
 				</script>
-				<center>
+				<div style="text-align: center;">
 
 
-					</form>
+					</div>
 
 			</div>
 			<div id="UpdatePatient" class="tab-pane fade">

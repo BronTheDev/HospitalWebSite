@@ -3,36 +3,72 @@ require 'dbconfig/config.php';
 ob_start();
 session_start();
 if (isset($_POST['login'])) {
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+    $userName = $_POST['username'];
+    $passWord = $_POST['password'];
+	$_SESSION['userName'] = $_POST['username'];
+	$_SESSION['passWord'] = $_POST['password'];
 
-	$query = "select * from user WHERE username ='$username' AND password = '$password'";
-	$query_run = mysqli_query($con, $query);
-	$usertypes = mysqli_fetch_array($query_run);
+    try {
+        $serverName =  "DESKTOP-GMPS9UK"; //DESKTOP-GMPS9UK\Hospital
+        $connectionInfo = array("Database"=>"Hospital", "UID"=>$userName, "PWD"=>$passWord);
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-	if ($usertypes['role'] == "patient") {
-		//Valid User
+        if ($conn == false) {
+            print_r("A Connection could not be established");
+            die(FormatErrors(sqlsrv_errors()));
+        }
 
-		header('Location: Patient.php');
-		$_SESSION['username'] = $username;
-		exit();
-	} elseif ($usertypes['role'] == "doctor") {
-		//Valid User
-		//$_SESSION['username'] = $username;
-		header('Location: Doctor.php');
-		$_SESSION['username'] = $username;
-		exit();
-	} elseif ($usertypes['role'] == "nurse") {
-		//Valid User
-		//$_SESSION['username'] = $username;
-		header('Location: Nurse.php');
-		$_SESSION['username'] = $username;
-		exit();
-	} else {
+    } catch(Exception $e)
+    {
+        echo("Error!");
+    }
+
+        $query= "select [role] from users where user_name = '$userName' and password = '$passWord'";
+        print_r($query);
+
+		$query_run = sqlsrv_query($conn,$query);
+        if( $query_run === false ) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+
+        // Make the first (and in this case, only) row of the result set available for reading.
+
+        if ( sqlsrv_fetch( $query_run ) == false) {
+		    die( print_r( sqlsrv_errors(), true));
+        }
+        // Get the row fields. Field indices start at 0 and must be retrieved in order.
+        // Retrieving row fields by name is not supported by sqlsrv_get_field.
+
+		$user_types = sqlsrv_get_field($query_run, 0);
+        print_r(gettype($user_types));
+        $user_type = trim($user_types);
+		if($user_type == "Patient"){
+			//Valid User
+
+			header('Location: Patient.php');
+			$_SESSION['username'] = $userName;
+			exit();
+		}
+		elseif($user_type == "Doctor"){
+			//Valid User
+			//$_SESSION['username'] = $username;
+			header('Location: Doctor.php');
+			$_SESSION['username'] = $userName;
+			exit();
+		}
+		elseif($user_type == "Nurse"){
+			//Valid User
+			//$_SESSION['username'] = $username;
+			header('Location: Nurse.php');
+			$_SESSION['username'] = $userName;
+			exit();
+		}
+		else{
 		$_SESSION['status'] = "Invalid Credentials";
 		echo '<script type="text/javascript"> alert("Error! User Name is Taken") </script>';
 		//header('location: index.php');
 	}
+
 }
 
 ?>

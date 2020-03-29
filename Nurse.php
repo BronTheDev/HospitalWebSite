@@ -2,6 +2,8 @@
 session_start();
 //require 'security.php';
 require 'dbconfig/config.php';
+require 'index.php';
+
 if (isset($_POST["logout"])) {
 		session_start();
 		session_destroy();
@@ -98,13 +100,13 @@ if (isset($_POST["logout"])) {
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 
-				<center>
+				<div style="text-align: center;">
 					<h2>NCAT HEALTH CENTER</h2>
 					<img src="imgs/logo.png" class="avatar" />
 					<h4> Welcome <?php echo $_SESSION['username']; ?> </h4>
 					<form class="myform" action="Nurse.php" method="post">
 						<input name="logout" type="submit" class="btn btn-info btn-lg" id="back_btn" value="Log Out" />
-				</center>
+				</div>
 			</div>
 			<div id="SearchPatient" class="tab-pane fade">
 				<center>
@@ -115,6 +117,18 @@ if (isset($_POST["logout"])) {
 						<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
 				</center>
+               <?php
+                $dbName="Hospital";
+               $serverName = "DESKTOP-GMPS9UK";
+               $dbName="Hospital";
+               $username = $_SESSION['userName'];
+               $password = $_SESSION['passWord'];
+               $dbh = new PDO( "sqlsrv:server=".$serverName."; Database=".$dbName, $username, $password);
+                $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+                $searchPatients = "select * from patients";
+                ?>
+
+
 				<table id="myTable">
 					<tr class="header">
 						<th style="width:5%;">ID</th>
@@ -124,15 +138,33 @@ if (isset($_POST["logout"])) {
 						<th style="width:20%;">Billing</th>
 						<th style="width:20%;">Last Updated</th>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>Geogio Armani</td>
-						<td>Alfreds@gmail.com</td>
-						<td>(919)-345-6849</td>
-						<td>$12,323.23</td>
-						<td>12:45 AM</td>
-					</tr>
+                    <tr>
+                        <td>17883</td>
+                        <td>Geogio Armani</td>
+                        <td>Alfreds@gmail.com</td>
+                        <td>(919)-345-6849</td>
+                        <td>$12,323.23</td>
+                        <td>12:45 AM</td>
+                    </tr>
+                    <?php
+                    foreach ($dbh->query($searchPatients) as $rows) {
+                        ?>
+                        <tr>
+                            <td><?php echo ($rows['name']) ?></td>
+                            <td><?php echo $rows['address'] ?></td>
+                            <td><?php echo $rows['ID'] ?></td>
+                            <td><?php echo $rows['phone_number'] ?></td>
+                            <td><?php echo $rows['account_balance'] ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+
 				</table>
+
+
 
 				<script>
 					function myFunction() {
@@ -157,7 +189,7 @@ if (isset($_POST["logout"])) {
 				<center>
 
 
-					</form>
+					</center>
 
 			</div>
 			<div id="UpdatePatient" class="tab-pane fade">
