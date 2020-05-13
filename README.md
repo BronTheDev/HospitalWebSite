@@ -8,4 +8,4 @@ For our Hospital database, we used the Microsoft SQL Server, as well as SQL Serv
 
 To establish a connection to our database, we downloaded the Microsoft Drivers for PHP for SQL Server and enabled them. This extension allowed us to integrate the PHP application with our SQL Server so that data can be both written and read within the script. To secure our network we created our own SSL certificate using OpenSSL in the Apache server and also added a subdomain to my localhost domain for the WWW certificate. We also used a md5 hash that hashed all user passwords and usernames before logging in and as soon as we registered a user whether that was a patient, doctor or nurse.
 
-
+[link to Photos](https://docs.google.com/presentation/d/1jlAeonMUedM3LlcqV-6u3ghrABkgibrCI7NDvqMhmtE/edit#slide=id.g7233a93990_1_1)
